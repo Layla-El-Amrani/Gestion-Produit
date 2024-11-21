@@ -1,0 +1,30 @@
+// ProductDetails.js
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+const ProductDetails = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    // Appel API pour les détails d'un produit
+    fetch(`https://api.example.com/unProduit/${id}`) // Remplacez par l'URL de votre API
+      .then((response) => response.json())
+      .then((data) => setProduct(data))
+      .catch((error) => console.error('Erreur:', error));
+  }, [id]);
+
+  if (!product) {
+    return <p>Chargement...</p>;
+  }
+
+  return (
+    <div>
+      <h2>{product.name}</h2>
+      <p>Description: {product.description}</p>
+      <p>Prix: {product.price} €</p>
+    </div>
+  );
+};
+
+export default ProductDetails;
